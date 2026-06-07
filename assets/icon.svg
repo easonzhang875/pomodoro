@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- 番茄主体 -->
+  <ellipse cx="64" cy="72" rx="48" ry="44" fill="#e74c3c"/>
+  <!-- 高光 -->
+  <ellipse cx="48" cy="56" rx="16" ry="10" fill="#f1948a" opacity="0.5"/>
+  <!-- 叶子 -->
+  <path d="M64 30 Q64 14 80 18 Q66 22 64 30Z" fill="#27ae60"/>
+  <!-- 茎 -->
+  <path d="M64 30 Q62 22 60 16" stroke="#27ae60" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>
