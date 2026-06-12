@@ -1,0 +1,435 @@
+/* ═══════════════════════════════════════════════════════
+   汽车吊支腿压力实时监测系统 — 样式表
+   深色专业仪表盘风格
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+    --bg-primary: #0f1923;
+    --bg-secondary: #152230;
+    --bg-card: #1a2d3d;
+    --bg-input: #1e3448;
+    --border: #2a4560;
+    --text-primary: #e8edf2;
+    --text-secondary: #8ba0b8;
+    --text-muted: #5a7a94;
+    --accent: #3498db;
+    --accent-hover: #2980b9;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --success: #27ae60;
+    --focus: #e74c3c;
+    --short-break: #27ae60;
+    --long-break: #3498db;
+    --slider-track: #1e3a54;
+    --slider-fill: #3498db;
+    --font-cn: "Microsoft YaHei UI", "PingFang SC", "Noto Sans SC", sans-serif;
+    --font-mono: "Cascadia Code", "Consolas", "JetBrains Mono", monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: var(--font-cn);
+    font-size: 13px;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+}
+
+/* ═══════════════════════════════════════════════════════
+   布局
+   ═══════════════════════════════════════════════════════ */
+
+#app {
+    display: grid;
+    grid-template-rows: 48px 1fr 32px;
+    grid-template-columns: 1fr 420px;
+    grid-template-areas:
+        "header header"
+        "view3d panel"
+        "status status";
+    width: 100vw;
+    height: 100vh;
+}
+
+/* ── 顶部栏 ── */
+#header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    z-index: 10;
+}
+
+#header .title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+#header .title .icon { margin-right: 6px; }
+
+#header .actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-family: var(--font-cn);
+    font-size: 12px;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+.btn:hover {
+    background: var(--bg-input);
+    border-color: var(--accent);
+}
+.btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+}
+.btn-primary:hover {
+    background: var(--accent-hover);
+}
+.btn-danger {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: #fff;
+}
+
+/* ── 3D 视图 ── */
+#view3d {
+    grid-area: view3d;
+    position: relative;
+    background: radial-gradient(ellipse at center, #1a3040 0%, #0a1520 100%);
+    cursor: grab;
+}
+#view3d:active { cursor: grabbing; }
+#view3d canvas { display: block; }
+
+.view3d-overlay {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    pointer-events: none;
+}
+.view3d-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+    background: rgba(0,0,0,0.5);
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+/* ── 控制面板 ── */
+#panel {
+    grid-area: panel;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-secondary);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.panel-section {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+}
+
+.panel-section:last-child { border-bottom: none; }
+
+.section-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--accent);
+    letter-spacing: 0.3px;
+}
+
+/* ── 起重机选型 ── */
+.select-crane {
+    width: 100%;
+    padding: 8px 12px;
+    background: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: var(--font-cn);
+    font-size: 13px;
+    cursor: pointer;
+    outline: none;
+}
+.select-crane:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
+}
+
+.crane-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 12px;
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+.crane-specs span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.crane-specs .val {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* ── 滑块控制组 ── */
+.control-group {
+    margin-bottom: 10px;
+}
+.control-group:last-child { margin-bottom: 0; }
+
+.control-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+.control-label .value {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    min-width: 60px;
+    text-align: right;
+}
+
+/* 自定义滑块 */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--slider-track);
+    outline: none;
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg-secondary);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* ── 计算结果卡片 ── */
+.result-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.result-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    text-align: center;
+    transition: border-color 0.3s, background 0.3s;
+}
+
+.result-card .card-name {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.result-card .card-force {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    margin-bottom: 2px;
+}
+
+.result-card .card-pressure {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.result-card.status-normal {
+    border-color: var(--success);
+}
+.result-card.status-normal .card-force {
+    color: var(--success);
+}
+
+.result-card.status-warning {
+    border-color: var(--warning);
+    background: rgba(243,156,18,0.08);
+}
+.result-card.status-warning .card-force {
+    color: var(--warning);
+}
+
+.result-card.status-danger {
+    border-color: var(--danger);
+    background: rgba(231,76,60,0.1);
+}
+.result-card.status-danger .card-force {
+    color: var(--danger);
+}
+
+/* ── 安全状态 ── */
+.safety-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.safety-indicator.safe {
+    background: rgba(39,174,96,0.12);
+    border: 1px solid var(--success);
+    color: var(--success);
+}
+
+.safety-indicator.caution {
+    background: rgba(243,156,18,0.12);
+    border: 1px solid var(--warning);
+    color: var(--warning);
+}
+
+.safety-indicator.danger {
+    background: rgba(231,76,60,0.12);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+}
+
+.safety-detail {
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+/* ── 底部状态栏 ── */
+#status-bar {
+    grid-area: status;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+#status-bar .status-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-right: 6px;
+    background: var(--success);
+}
+#status-bar .status-dot.error { background: var(--danger); }
+#status-bar .status-dot.loading { background: var(--warning); animation: pulse 1s infinite; }
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* ── 计算书弹窗 ── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    width: 95vw;
+    height: 90vh;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: #f0f4f8;
+    border-bottom: 1px solid #ddd;
+}
+
+.modal-header h3 {
+    font-size: 15px;
+    color: #1a1a1a;
+}
+
+.modal-body {
+    flex: 1;
+    overflow: auto;
+    border: none;
+}
+
+/* ── 响应式 ── */
+@media (max-width: 900px) {
+    #app {
+        grid-template-columns: 1fr;
+        grid-template-rows: 48px 50vh 1fr 32px;
+        grid-template-areas:
+            "header"
+            "view3d"
+            "panel"
+            "status";
+    }
+    #panel {
+        border-left: none;
+        border-top: 1px solid var(--border);
+    }
+}
+
+/* ── 滚动条 ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }

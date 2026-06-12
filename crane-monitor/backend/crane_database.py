@@ -1,0 +1,248 @@
+"""
+汽车起重机参数数据库
+覆盖 25t–500t 常用吨位，参数参考徐工 QY 系列 / 三一 SAC 系列公开数据
+"""
+
+CRANE_MODELS = {
+    "qy25k5": {
+        "model_name": "QY25K5 (徐工 25吨)",
+        "rated_capacity_kg": 25000,
+        "operating_mass_kg": 32400,
+        "cg_x_m": 0.0,          # 横向重心偏移（相对回转中心，右为正）
+        "cg_y_m": 0.35,         # 纵向重心偏移（相对回转中心，前为正）
+        "outrigger_long_m": 5.60,    # 支腿纵向跨距
+        "outrigger_trans_m": 6.00,   # 支腿横向跨距
+        "outrigger_pad_area_m2": 0.25,  # 支腿垫板面积 (0.5m × 0.5m)
+        "boom_min_m": 10.5,     # 主臂最短长度
+        "boom_max_m": 40.0,     # 主臂最长长度
+        "boom_pivot_height_m": 3.2,  # 臂架铰点离地高度
+        "max_load_moment_knm": 980,  # 最大起重力矩
+        "chassis_width_m": 2.5,      # 底盘宽度
+        "chassis_length_m": 12.0,    # 底盘长度
+        "turntable_radius_m": 1.2,   # 回转平台半径
+    },
+    "qy35k5": {
+        "model_name": "QY35K5 (徐工 35吨)",
+        "rated_capacity_kg": 35000,
+        "operating_mass_kg": 38000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.40,
+        "outrigger_long_m": 5.80,
+        "outrigger_trans_m": 6.20,
+        "outrigger_pad_area_m2": 0.30,
+        "boom_min_m": 10.8,
+        "boom_max_m": 43.0,
+        "boom_pivot_height_m": 3.4,
+        "max_load_moment_knm": 1350,
+        "chassis_width_m": 2.5,
+        "chassis_length_m": 12.5,
+        "turntable_radius_m": 1.3,
+    },
+    "qy50k": {
+        "model_name": "QY50K (徐工 50吨)",
+        "rated_capacity_kg": 50000,
+        "operating_mass_kg": 42000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.45,
+        "outrigger_long_m": 6.30,
+        "outrigger_trans_m": 7.20,
+        "outrigger_pad_area_m2": 0.36,
+        "boom_min_m": 11.0,
+        "boom_max_m": 44.0,
+        "boom_pivot_height_m": 3.6,
+        "max_load_moment_knm": 1800,
+        "chassis_width_m": 2.8,
+        "chassis_length_m": 13.5,
+        "turntable_radius_m": 1.4,
+    },
+    "sac70": {
+        "model_name": "SAC70 (三一 70吨)",
+        "rated_capacity_kg": 70000,
+        "operating_mass_kg": 48000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.50,
+        "outrigger_long_m": 6.80,
+        "outrigger_trans_m": 7.50,
+        "outrigger_pad_area_m2": 0.42,
+        "boom_min_m": 11.5,
+        "boom_max_m": 47.0,
+        "boom_pivot_height_m": 3.8,
+        "max_load_moment_knm": 2400,
+        "chassis_width_m": 2.8,
+        "chassis_length_m": 14.0,
+        "turntable_radius_m": 1.5,
+    },
+    "qy80k": {
+        "model_name": "QY80K (徐工 80吨)",
+        "rated_capacity_kg": 80000,
+        "operating_mass_kg": 50000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.55,
+        "outrigger_long_m": 7.00,
+        "outrigger_trans_m": 7.60,
+        "outrigger_pad_area_m2": 0.49,
+        "boom_min_m": 12.0,
+        "boom_max_m": 49.0,
+        "boom_pivot_height_m": 4.0,
+        "max_load_moment_knm": 2800,
+        "chassis_width_m": 3.0,
+        "chassis_length_m": 14.5,
+        "turntable_radius_m": 1.6,
+    },
+    "qy100k": {
+        "model_name": "QY100K (徐工 100吨)",
+        "rated_capacity_kg": 100000,
+        "operating_mass_kg": 60000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.60,
+        "outrigger_long_m": 7.60,
+        "outrigger_trans_m": 7.60,
+        "outrigger_pad_area_m2": 0.64,
+        "boom_min_m": 12.8,
+        "boom_max_m": 52.0,
+        "boom_pivot_height_m": 4.2,
+        "max_load_moment_knm": 3600,
+        "chassis_width_m": 3.0,
+        "chassis_length_m": 15.0,
+        "turntable_radius_m": 1.7,
+    },
+    "sac130": {
+        "model_name": "SAC130 (三一 130吨)",
+        "rated_capacity_kg": 130000,
+        "operating_mass_kg": 64000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.65,
+        "outrigger_long_m": 8.00,
+        "outrigger_trans_m": 8.00,
+        "outrigger_pad_area_m2": 0.81,
+        "boom_min_m": 13.5,
+        "boom_max_m": 56.0,
+        "boom_pivot_height_m": 4.5,
+        "max_load_moment_knm": 4600,
+        "chassis_width_m": 3.0,
+        "chassis_length_m": 15.5,
+        "turntable_radius_m": 1.8,
+    },
+    "qy160k": {
+        "model_name": "QY160K (徐工 160吨)",
+        "rated_capacity_kg": 160000,
+        "operating_mass_kg": 68000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.70,
+        "outrigger_long_m": 8.30,
+        "outrigger_trans_m": 8.20,
+        "outrigger_pad_area_m2": 1.00,
+        "boom_min_m": 14.0,
+        "boom_max_m": 60.0,
+        "boom_pivot_height_m": 4.8,
+        "max_load_moment_knm": 5600,
+        "chassis_width_m": 3.2,
+        "chassis_length_m": 16.0,
+        "turntable_radius_m": 1.9,
+    },
+    "qy200k": {
+        "model_name": "QY200K (徐工 200吨)",
+        "rated_capacity_kg": 200000,
+        "operating_mass_kg": 72000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.75,
+        "outrigger_long_m": 8.50,
+        "outrigger_trans_m": 8.30,
+        "outrigger_pad_area_m2": 1.21,
+        "boom_min_m": 14.5,
+        "boom_max_m": 62.0,
+        "boom_pivot_height_m": 5.0,
+        "max_load_moment_knm": 6800,
+        "chassis_width_m": 3.2,
+        "chassis_length_m": 16.5,
+        "turntable_radius_m": 2.0,
+    },
+    "qay250": {
+        "model_name": "QAY250 (徐工 250吨 全地面)",
+        "rated_capacity_kg": 250000,
+        "operating_mass_kg": 78000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.80,
+        "outrigger_long_m": 8.80,
+        "outrigger_trans_m": 8.60,
+        "outrigger_pad_area_m2": 1.44,
+        "boom_min_m": 15.0,
+        "boom_max_m": 68.0,
+        "boom_pivot_height_m": 5.3,
+        "max_load_moment_knm": 8500,
+        "chassis_width_m": 3.2,
+        "chassis_length_m": 17.0,
+        "turntable_radius_m": 2.1,
+    },
+    "qay300": {
+        "model_name": "QAY300 (徐工 300吨 全地面)",
+        "rated_capacity_kg": 300000,
+        "operating_mass_kg": 84000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.85,
+        "outrigger_long_m": 9.20,
+        "outrigger_trans_m": 8.80,
+        "outrigger_pad_area_m2": 1.69,
+        "boom_min_m": 15.5,
+        "boom_max_m": 72.0,
+        "boom_pivot_height_m": 5.6,
+        "max_load_moment_knm": 10500,
+        "chassis_width_m": 3.4,
+        "chassis_length_m": 18.0,
+        "turntable_radius_m": 2.2,
+    },
+    "qay400": {
+        "model_name": "QAY400 (徐工 400吨 全地面)",
+        "rated_capacity_kg": 400000,
+        "operating_mass_kg": 90000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.90,
+        "outrigger_long_m": 10.00,
+        "outrigger_trans_m": 9.50,
+        "outrigger_pad_area_m2": 2.25,
+        "boom_min_m": 16.0,
+        "boom_max_m": 78.0,
+        "boom_pivot_height_m": 6.0,
+        "max_load_moment_knm": 14000,
+        "chassis_width_m": 3.4,
+        "chassis_length_m": 19.0,
+        "turntable_radius_m": 2.3,
+    },
+    "qay500": {
+        "model_name": "QAY500 (徐工 500吨 全地面)",
+        "rated_capacity_kg": 500000,
+        "operating_mass_kg": 96000,
+        "cg_x_m": 0.0,
+        "cg_y_m": 0.95,
+        "outrigger_long_m": 11.00,
+        "outrigger_trans_m": 10.50,
+        "outrigger_pad_area_m2": 3.00,
+        "boom_min_m": 16.5,
+        "boom_max_m": 84.0,
+        "boom_pivot_height_m": 6.5,
+        "max_load_moment_knm": 18000,
+        "chassis_width_m": 3.6,
+        "chassis_length_m": 20.0,
+        "turntable_radius_m": 2.5,
+    },
+}
+
+
+def get_all_cranes():
+    """返回所有起重机型号简要列表"""
+    result = []
+    for key, data in CRANE_MODELS.items():
+        result.append({
+            "id": key,
+            "model_name": data["model_name"],
+            "rated_capacity_t": data["rated_capacity_kg"] / 1000,
+            "max_load_moment_knm": data["max_load_moment_knm"],
+        })
+    # 按吨位排序
+    result.sort(key=lambda x: x["rated_capacity_t"])
+    return result
+
+
+def get_crane_by_id(crane_id: str):
+    """根据 ID 获取起重机完整参数，不存在则返回 None"""
+    return CRANE_MODELS.get(crane_id)

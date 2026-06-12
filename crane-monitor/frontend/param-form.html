@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>吊装工况确认 — SAP2000 建模参数收集</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: "Microsoft YaHei UI", sans-serif; background: #1a1a2e; color: #eee; padding: 20px; }
+    h1 { text-align: center; margin-bottom: 20px; color: #e94560; }
+    .container { display: flex; gap: 20px; max-width: 1400px; margin: 0 auto; flex-wrap: wrap; }
+    .image-panel { flex: 1; min-width: 500px; }
+    .image-panel img { width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+    .form-panel { flex: 1; min-width: 400px; background: #16213e; border-radius: 8px; padding: 24px; }
+    .section { margin-bottom: 20px; }
+    .section h3 { color: #0f3460; background: #e94560; padding: 6px 12px; border-radius: 4px; margin-bottom: 12px; font-size: 14px; }
+    .field { margin-bottom: 10px; display: flex; align-items: center; }
+    .field label { width: 160px; font-size: 13px; color: #a0a0b0; flex-shrink: 0; }
+    .field input, .field select { flex: 1; padding: 6px 10px; border: 1px solid #0f3460; border-radius: 4px; background: #1a1a2e; color: #fff; font-size: 13px; }
+    .field input:focus { border-color: #e94560; outline: none; }
+    .btn { display: block; width: 100%; padding: 12px; background: #e94560; color: #fff; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; font-weight: bold; margin-top: 16px; }
+    .btn:hover { background: #c73e54; }
+    .note { font-size: 11px; color: #666; margin-top: 12px; text-align: center; }
+</style>
+</head>
+<body>
+<h1>🏗️ 吊装工况参数确认</h1>
+<div class="container">
+    <div class="image-panel">
+        <img src="lifting.jpg" alt="吊装工况图">
+        <p style="text-align:center;margin-top:8px;color:#888;">▲ 请对照图片填写右侧参数</p>
+    </div>
+    <div class="form-panel">
+        <div class="section">
+            <h3>📋 被吊物（平台/结构）参数</h3>
+            <div class="field"><label>被吊物名称</label><input id="structure-name" value="钢结构平台"></div>
+            <div class="field"><label>长度 (m)</label><input id="length" type="number" value="12" step="0.1"></div>
+            <div class="field"><label>宽度 (m)</label><input id="width" type="number" value="6" step="0.1"></div>
+            <div class="field"><label>高度/厚度 (m)</label><input id="height" type="number" value="1.5" step="0.1"></div>
+            <div class="field"><label>总质量 (t)</label><input id="mass" type="number" value="25" step="0.1"></div>
+            <div class="field"><label>材质</label><select id="material"><option>Q235B</option><option>Q345B</option><option>Q355B</option><option>Q420</option></select></div>
+        </div>
+        <div class="section">
+            <h3>🎣 吊点布置</h3>
+            <div class="field"><label>吊点数量</label><select id="lift-points"><option>4</option><option>2</option><option>6</option><option>8</option></select></div>
+            <div class="field"><label>吊索与水平面夹角 (°)</label><input id="sling-angle" type="number" value="60" step="1"></div>
+            <div class="field"><label>吊点距边缘距离 (m)</label><input id="edge-dist" type="number" value="1.5" step="0.1"></div>
+        </div>
+        <div class="section">
+            <h3>🚛 起重机信息</h3>
+            <div class="field"><label>起重机吨位 (t)</label><input id="crane-cap" type="number" value="100" step="5"></div>
+            <div class="field"><label>工作幅度 (m)</label><input id="radius" type="number" value="14" step="0.1"></div>
+            <div class="field"><label>臂长 (m)</label><input id="boom-length" type="number" value="30" step="0.1"></div>
+        </div>
+        <button class="btn" onclick="collectAndCopy()">📋 复制参数并告诉我</button>
+        <p class="note">点击按钮后，将参数粘贴到 Claude Code 对话框中即可</p>
+    </div>
+</div>
+<script>
+function collectAndCopy() {
+    const params = {
+        '被吊物': document.getElementById('structure-name').value,
+        '尺寸(L×W×H)': `${document.getElementById('length').value}m × ${document.getElementById('width').value}m × ${document.getElementById('height').value}m`,
+        '总质量': document.getElementById('mass').value + ' t',
+        '材质': document.getElementById('material').value,
+        '吊点数量': document.getElementById('lift-points').value,
+        '吊索角度': document.getElementById('sling-angle').value + '°',
+        '吊点距边': document.getElementById('edge-dist').value + ' m',
+        '起重机吨位': document.getElementById('crane-cap').value + ' t',
+        '工作幅度': document.getElementById('radius').value + ' m',
+        '臂长': document.getElementById('boom-length').value + ' m',
+    };
+    let text = '请根据图片中的吊装工况，用以下参数建立 SAP2000 有限元分析模型：\n\n';
+    for (const [k, v] of Object.entries(params)) {
+        text += `- **${k}**：${v}\n`;
+    }
+    text += '\n如果以上参数与图片不符，请修正后再发送。';
+    navigator.clipboard.writeText(text).then(() => {
+        alert('参数已复制！请切换回 Claude Code 对话框粘贴 (Ctrl+V)');
+    });
+}
+</script>
+</body>
+</html>

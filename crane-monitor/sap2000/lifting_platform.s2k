@@ -1,0 +1,535 @@
+$ -------------------------------------------------------------
+$ SAP2000 吊装分析模型 — 钢结构平台 4 点吊装
+$
+$ 工程参数:
+$   被吊物: 钢结构平台 12m × 6m × 1.5m, 25t, Q345B
+$   吊点: 4 点，距边缘 1.5m，索角 60°
+$   动载系数: 1.25 (GB/T 3811-2008 表4)
+$   起重机: 100t 级, 工作幅度 14m, 臂长 30m
+$
+$ 规范依据:
+$   GB 50017-2017 钢结构设计标准
+$   GB/T 3811-2008 起重机设计规范
+$   GB 50661-2011 钢结构焊接规范
+$
+$ 生成时间: 自动生成
+$ -------------------------------------------------------------
+
+TABLE: "PROGRAM CONTROL"
+  ProgramName=SAP2000  Version=26.0.0  CurrUnits="KN, m, C"  SteelCode="Chinese 2018"  ConcCode="Chinese 2010"  AlumCode="AA 2015"  ColdCode=AISI-16  RegenHinge=Yes
+
+TABLE: "ACTIVE DEGREES OF FREEDOM"
+  UX=Yes  UY=Yes  UZ=Yes  RX=Yes  RY=Yes  RZ=Yes
+
+TABLE: "MATERIAL PROPERTIES 01 - GENERAL"
+  Material=Q345B  Type=Steel  Grade=Q345B  SymType=Isotropic  TempDepend=No  Color=Red
+  Material=WIRE  Type=Steel  Grade="WireRope"  SymType=Isotropic  TempDepend=No  Color=Blue
+
+TABLE: "MATERIAL PROPERTIES 02 - BASIC MECHANICAL PROPERTIES"
+  Material=Q345B  UnitWeight=76.9729  UnitMass=7.849  E1=206000000  G12=79230769  U12=0.3  A1=0.000012
+  Material=WIRE  UnitWeight=78.5  UnitMass=8.005  E1=110000000  G12=42307692  U12=0.3  A1=0.000012
+
+TABLE: "MATERIAL PROPERTIES 03A - STEEL DATA"
+  Material=Q345B  Fy=345000  Fu=490000  EffFy=380000  EffFu=520000  SSCurveOpt=Simple  SSHysType=Kinematic  SHard=0.015  SMax=0.11  SRup=0.17  FinalSlope=-0.1  CoupModType="Von Mises"
+  Material=WIRE  Fy=1570000  Fu=1770000  EffFy=1650000  EffFu=1850000  SSCurveOpt=Simple  SSHysType=Kinematic  SHard=0.01  SMax=0.05  SRup=0.08  FinalSlope=-0.1  CoupModType="Von Mises"
+
+TABLE: "FRAME SECTION PROPERTIES 01 - GENERAL"
+  SectionName=MAIN_BEAM  Material=Q345B  Shape="I/Wide Flange"  t3=0.4000  t2=0.2000  tf=0.0120  tw=0.0080  t2b=0.2000  tfb=0.0120  Area=0.007808  TorsConst=0.00000030  I33=0.00021615  I22=0.00001602  AS2=0.003008  AS3=0.004800
+  SectionName=SEC_BEAM  Material=Q345B  Shape="I/Wide Flange"  t3=0.3000  t2=0.1500  tf=0.0090  tw=0.0065  t2b=0.1500  tfb=0.0090  Area=0.004533  TorsConst=0.00000010  I33=0.00006933  I22=0.00000507  AS2=0.001833  AS3=0.002700
+  SectionName=BOT_BEAM  Material=Q345B  Shape="I/Wide Flange"  t3=0.3000  t2=0.1500  tf=0.0090  tw=0.0065  t2b=0.1500  tfb=0.0090  Area=0.004533  TorsConst=0.00000010  I33=0.00006933  I22=0.00000507  AS2=0.001833  AS3=0.002700
+  SectionName=COLUMN  Material=Q345B  Shape="I/Wide Flange"  t3=0.2000  t2=0.2000  tf=0.0120  tw=0.0080  t2b=0.2000  tfb=0.0120  Area=0.006208  TorsConst=0.00000026  I33=0.00004610  I22=0.00001601  AS2=0.001408  AS3=0.004800
+  SectionName=COLUMN_INNER  Material=Q345B  Shape="I/Wide Flange"  t3=0.2000  t2=0.2000  tf=0.0120  tw=0.0080  t2b=0.2000  tfb=0.0120  Area=0.006208  TorsConst=0.00000026  I33=0.00004610  I22=0.00001601  AS2=0.001408  AS3=0.004800
+  SectionName=BRACING  Material=Q345B  Shape="Angle"  t3=0.1000  t2=0.1000  tf=0.0100  tw=0.0100  t2b=0.1000  tfb=0.0100  Area=0.001900
+  SectionName=H_BRACING  Material=Q345B  Shape="Angle"  t3=0.1000  t2=0.1000  tf=0.0100  tw=0.0100  t2b=0.1000  tfb=0.0100  Area=0.001900
+  SectionName=SLING  Material=WIRE  Shape="Circle"  t3=0.0400  Area=0.00125660  TorsConst=0.0000002513  I33=0.0000001257  I22=0.0000001257  AS2=0.00113094  AS3=0.00113094
+  SectionName=RIGID_LINK  Material=Q345B  Shape="Rectangular"  t3=0.2  t2=0.2  Area=0.04  TorsConst=1  I33=1  I22=1  AS2=1  AS3=1
+
+TABLE: "JOINT COORDINATES"
+  Joint=1  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-6.0000  Y=-3.0000  Z=0.0000
+  Joint=2  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-6.0000  Y=-1.5000  Z=0.0000
+  Joint=3  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-6.0000  Y=0.0000  Z=0.0000
+  Joint=4  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-6.0000  Y=1.5000  Z=0.0000
+  Joint=5  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-6.0000  Y=3.0000  Z=0.0000
+  Joint=6  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-3.0000  Y=-3.0000  Z=0.0000
+  Joint=7  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-3.0000  Y=-1.5000  Z=0.0000
+  Joint=8  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-3.0000  Y=0.0000  Z=0.0000
+  Joint=9  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-3.0000  Y=1.5000  Z=0.0000
+  Joint=10  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-3.0000  Y=3.0000  Z=0.0000
+  Joint=11  CoordSys=GLOBAL  CoordType=Cartesian  XorR=0.0000  Y=-3.0000  Z=0.0000
+  Joint=12  CoordSys=GLOBAL  CoordType=Cartesian  XorR=0.0000  Y=-1.5000  Z=0.0000
+  Joint=13  CoordSys=GLOBAL  CoordType=Cartesian  XorR=0.0000  Y=0.0000  Z=0.0000
+  Joint=14  CoordSys=GLOBAL  CoordType=Cartesian  XorR=0.0000  Y=1.5000  Z=0.0000
+  Joint=15  CoordSys=GLOBAL  CoordType=Cartesian  XorR=0.0000  Y=3.0000  Z=0.0000
+  Joint=16  CoordSys=GLOBAL  CoordType=Cartesian  XorR=3.0000  Y=-3.0000  Z=0.0000
+  Joint=17  CoordSys=GLOBAL  CoordType=Cartesian  XorR=3.0000  Y=-1.5000  Z=0.0000
+  Joint=18  CoordSys=GLOBAL  CoordType=Cartesian  XorR=3.0000  Y=0.0000  Z=0.0000
+  Joint=19  CoordSys=GLOBAL  CoordType=Cartesian  XorR=3.0000  Y=1.5000  Z=0.0000
+  Joint=20  CoordSys=GLOBAL  CoordType=Cartesian  XorR=3.0000  Y=3.0000  Z=0.0000
+  Joint=21  CoordSys=GLOBAL  CoordType=Cartesian  XorR=6.0000  Y=-3.0000  Z=0.0000
+  Joint=22  CoordSys=GLOBAL  CoordType=Cartesian  XorR=6.0000  Y=-1.5000  Z=0.0000
+  Joint=23  CoordSys=GLOBAL  CoordType=Cartesian  XorR=6.0000  Y=0.0000  Z=0.0000
+  Joint=24  CoordSys=GLOBAL  CoordType=Cartesian  XorR=6.0000  Y=1.5000  Z=0.0000
+  Joint=25  CoordSys=GLOBAL  CoordType=Cartesian  XorR=6.0000  Y=3.0000  Z=0.0000
+  Joint=26  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-6.0000  Y=-3.0000  Z=1.5000
+  Joint=27  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-6.0000  Y=-1.5000  Z=1.5000
+  Joint=28  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-6.0000  Y=0.0000  Z=1.5000
+  Joint=29  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-6.0000  Y=1.5000  Z=1.5000
+  Joint=30  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-6.0000  Y=3.0000  Z=1.5000
+  Joint=31  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-3.0000  Y=-3.0000  Z=1.5000
+  Joint=32  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-3.0000  Y=-1.5000  Z=1.5000
+  Joint=33  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-3.0000  Y=0.0000  Z=1.5000
+  Joint=34  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-3.0000  Y=1.5000  Z=1.5000
+  Joint=35  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-3.0000  Y=3.0000  Z=1.5000
+  Joint=36  CoordSys=GLOBAL  CoordType=Cartesian  XorR=0.0000  Y=-3.0000  Z=1.5000
+  Joint=37  CoordSys=GLOBAL  CoordType=Cartesian  XorR=0.0000  Y=-1.5000  Z=1.5000
+  Joint=38  CoordSys=GLOBAL  CoordType=Cartesian  XorR=0.0000  Y=0.0000  Z=1.5000
+  Joint=39  CoordSys=GLOBAL  CoordType=Cartesian  XorR=0.0000  Y=1.5000  Z=1.5000
+  Joint=40  CoordSys=GLOBAL  CoordType=Cartesian  XorR=0.0000  Y=3.0000  Z=1.5000
+  Joint=41  CoordSys=GLOBAL  CoordType=Cartesian  XorR=3.0000  Y=-3.0000  Z=1.5000
+  Joint=42  CoordSys=GLOBAL  CoordType=Cartesian  XorR=3.0000  Y=-1.5000  Z=1.5000
+  Joint=43  CoordSys=GLOBAL  CoordType=Cartesian  XorR=3.0000  Y=0.0000  Z=1.5000
+  Joint=44  CoordSys=GLOBAL  CoordType=Cartesian  XorR=3.0000  Y=1.5000  Z=1.5000
+  Joint=45  CoordSys=GLOBAL  CoordType=Cartesian  XorR=3.0000  Y=3.0000  Z=1.5000
+  Joint=46  CoordSys=GLOBAL  CoordType=Cartesian  XorR=6.0000  Y=-3.0000  Z=1.5000
+  Joint=47  CoordSys=GLOBAL  CoordType=Cartesian  XorR=6.0000  Y=-1.5000  Z=1.5000
+  Joint=48  CoordSys=GLOBAL  CoordType=Cartesian  XorR=6.0000  Y=0.0000  Z=1.5000
+  Joint=49  CoordSys=GLOBAL  CoordType=Cartesian  XorR=6.0000  Y=1.5000  Z=1.5000
+  Joint=50  CoordSys=GLOBAL  CoordType=Cartesian  XorR=6.0000  Y=3.0000  Z=1.5000
+  Joint=51  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-4.5000  Y=-1.5000  Z=1.5000
+  Joint=52  CoordSys=GLOBAL  CoordType=Cartesian  XorR=4.5000  Y=-1.5000  Z=1.5000
+  Joint=53  CoordSys=GLOBAL  CoordType=Cartesian  XorR=-4.5000  Y=1.5000  Z=1.5000
+  Joint=54  CoordSys=GLOBAL  CoordType=Cartesian  XorR=4.5000  Y=1.5000  Z=1.5000
+  Joint=55  CoordSys=GLOBAL  CoordType=Cartesian  XorR=0.0000  Y=0.0000  Z=9.7158
+
+TABLE: "CONNECTIVITY - FRAME"
+  Frame=1  JointI=26  JointJ=31  IsCurved=No
+  Frame=2  JointI=31  JointJ=36  IsCurved=No
+  Frame=3  JointI=36  JointJ=41  IsCurved=No
+  Frame=4  JointI=41  JointJ=46  IsCurved=No
+  Frame=5  JointI=27  JointJ=32  IsCurved=No
+  Frame=6  JointI=32  JointJ=37  IsCurved=No
+  Frame=7  JointI=37  JointJ=42  IsCurved=No
+  Frame=8  JointI=42  JointJ=47  IsCurved=No
+  Frame=9  JointI=28  JointJ=33  IsCurved=No
+  Frame=10  JointI=33  JointJ=38  IsCurved=No
+  Frame=11  JointI=38  JointJ=43  IsCurved=No
+  Frame=12  JointI=43  JointJ=48  IsCurved=No
+  Frame=13  JointI=29  JointJ=34  IsCurved=No
+  Frame=14  JointI=34  JointJ=39  IsCurved=No
+  Frame=15  JointI=39  JointJ=44  IsCurved=No
+  Frame=16  JointI=44  JointJ=49  IsCurved=No
+  Frame=17  JointI=30  JointJ=35  IsCurved=No
+  Frame=18  JointI=35  JointJ=40  IsCurved=No
+  Frame=19  JointI=40  JointJ=45  IsCurved=No
+  Frame=20  JointI=45  JointJ=50  IsCurved=No
+  Frame=21  JointI=26  JointJ=27  IsCurved=No
+  Frame=22  JointI=27  JointJ=28  IsCurved=No
+  Frame=23  JointI=28  JointJ=29  IsCurved=No
+  Frame=24  JointI=29  JointJ=30  IsCurved=No
+  Frame=25  JointI=31  JointJ=32  IsCurved=No
+  Frame=26  JointI=32  JointJ=33  IsCurved=No
+  Frame=27  JointI=33  JointJ=34  IsCurved=No
+  Frame=28  JointI=34  JointJ=35  IsCurved=No
+  Frame=29  JointI=36  JointJ=37  IsCurved=No
+  Frame=30  JointI=37  JointJ=38  IsCurved=No
+  Frame=31  JointI=38  JointJ=39  IsCurved=No
+  Frame=32  JointI=39  JointJ=40  IsCurved=No
+  Frame=33  JointI=41  JointJ=42  IsCurved=No
+  Frame=34  JointI=42  JointJ=43  IsCurved=No
+  Frame=35  JointI=43  JointJ=44  IsCurved=No
+  Frame=36  JointI=44  JointJ=45  IsCurved=No
+  Frame=37  JointI=46  JointJ=47  IsCurved=No
+  Frame=38  JointI=47  JointJ=48  IsCurved=No
+  Frame=39  JointI=48  JointJ=49  IsCurved=No
+  Frame=40  JointI=49  JointJ=50  IsCurved=No
+  Frame=41  JointI=1  JointJ=6  IsCurved=No
+  Frame=42  JointI=6  JointJ=11  IsCurved=No
+  Frame=43  JointI=11  JointJ=16  IsCurved=No
+  Frame=44  JointI=16  JointJ=21  IsCurved=No
+  Frame=45  JointI=2  JointJ=7  IsCurved=No
+  Frame=46  JointI=7  JointJ=12  IsCurved=No
+  Frame=47  JointI=12  JointJ=17  IsCurved=No
+  Frame=48  JointI=17  JointJ=22  IsCurved=No
+  Frame=49  JointI=3  JointJ=8  IsCurved=No
+  Frame=50  JointI=8  JointJ=13  IsCurved=No
+  Frame=51  JointI=13  JointJ=18  IsCurved=No
+  Frame=52  JointI=18  JointJ=23  IsCurved=No
+  Frame=53  JointI=4  JointJ=9  IsCurved=No
+  Frame=54  JointI=9  JointJ=14  IsCurved=No
+  Frame=55  JointI=14  JointJ=19  IsCurved=No
+  Frame=56  JointI=19  JointJ=24  IsCurved=No
+  Frame=57  JointI=5  JointJ=10  IsCurved=No
+  Frame=58  JointI=10  JointJ=15  IsCurved=No
+  Frame=59  JointI=15  JointJ=20  IsCurved=No
+  Frame=60  JointI=20  JointJ=25  IsCurved=No
+  Frame=61  JointI=1  JointJ=2  IsCurved=No
+  Frame=62  JointI=2  JointJ=3  IsCurved=No
+  Frame=63  JointI=3  JointJ=4  IsCurved=No
+  Frame=64  JointI=4  JointJ=5  IsCurved=No
+  Frame=65  JointI=6  JointJ=7  IsCurved=No
+  Frame=66  JointI=7  JointJ=8  IsCurved=No
+  Frame=67  JointI=8  JointJ=9  IsCurved=No
+  Frame=68  JointI=9  JointJ=10  IsCurved=No
+  Frame=69  JointI=11  JointJ=12  IsCurved=No
+  Frame=70  JointI=12  JointJ=13  IsCurved=No
+  Frame=71  JointI=13  JointJ=14  IsCurved=No
+  Frame=72  JointI=14  JointJ=15  IsCurved=No
+  Frame=73  JointI=16  JointJ=17  IsCurved=No
+  Frame=74  JointI=17  JointJ=18  IsCurved=No
+  Frame=75  JointI=18  JointJ=19  IsCurved=No
+  Frame=76  JointI=19  JointJ=20  IsCurved=No
+  Frame=77  JointI=21  JointJ=22  IsCurved=No
+  Frame=78  JointI=22  JointJ=23  IsCurved=No
+  Frame=79  JointI=23  JointJ=24  IsCurved=No
+  Frame=80  JointI=24  JointJ=25  IsCurved=No
+  Frame=81  JointI=1  JointJ=26  IsCurved=No
+  Frame=82  JointI=2  JointJ=27  IsCurved=No
+  Frame=83  JointI=3  JointJ=28  IsCurved=No
+  Frame=84  JointI=4  JointJ=29  IsCurved=No
+  Frame=85  JointI=5  JointJ=30  IsCurved=No
+  Frame=86  JointI=6  JointJ=31  IsCurved=No
+  Frame=87  JointI=7  JointJ=32  IsCurved=No
+  Frame=88  JointI=8  JointJ=33  IsCurved=No
+  Frame=89  JointI=9  JointJ=34  IsCurved=No
+  Frame=90  JointI=10  JointJ=35  IsCurved=No
+  Frame=91  JointI=11  JointJ=36  IsCurved=No
+  Frame=92  JointI=12  JointJ=37  IsCurved=No
+  Frame=93  JointI=13  JointJ=38  IsCurved=No
+  Frame=94  JointI=14  JointJ=39  IsCurved=No
+  Frame=95  JointI=15  JointJ=40  IsCurved=No
+  Frame=96  JointI=16  JointJ=41  IsCurved=No
+  Frame=97  JointI=17  JointJ=42  IsCurved=No
+  Frame=98  JointI=18  JointJ=43  IsCurved=No
+  Frame=99  JointI=19  JointJ=44  IsCurved=No
+  Frame=100  JointI=20  JointJ=45  IsCurved=No
+  Frame=101  JointI=21  JointJ=46  IsCurved=No
+  Frame=102  JointI=22  JointJ=47  IsCurved=No
+  Frame=103  JointI=23  JointJ=48  IsCurved=No
+  Frame=104  JointI=24  JointJ=49  IsCurved=No
+  Frame=105  JointI=25  JointJ=50  IsCurved=No
+  Frame=106  JointI=1  JointJ=31  IsCurved=No
+  Frame=107  JointI=26  JointJ=6  IsCurved=No
+  Frame=108  JointI=6  JointJ=36  IsCurved=No
+  Frame=109  JointI=31  JointJ=11  IsCurved=No
+  Frame=110  JointI=11  JointJ=41  IsCurved=No
+  Frame=111  JointI=36  JointJ=16  IsCurved=No
+  Frame=112  JointI=16  JointJ=46  IsCurved=No
+  Frame=113  JointI=41  JointJ=21  IsCurved=No
+  Frame=114  JointI=5  JointJ=35  IsCurved=No
+  Frame=115  JointI=30  JointJ=10  IsCurved=No
+  Frame=116  JointI=10  JointJ=40  IsCurved=No
+  Frame=117  JointI=35  JointJ=15  IsCurved=No
+  Frame=118  JointI=15  JointJ=45  IsCurved=No
+  Frame=119  JointI=40  JointJ=20  IsCurved=No
+  Frame=120  JointI=20  JointJ=50  IsCurved=No
+  Frame=121  JointI=45  JointJ=25  IsCurved=No
+  Frame=122  JointI=1  JointJ=27  IsCurved=No
+  Frame=123  JointI=26  JointJ=2  IsCurved=No
+  Frame=124  JointI=2  JointJ=28  IsCurved=No
+  Frame=125  JointI=27  JointJ=3  IsCurved=No
+  Frame=126  JointI=3  JointJ=29  IsCurved=No
+  Frame=127  JointI=28  JointJ=4  IsCurved=No
+  Frame=128  JointI=4  JointJ=30  IsCurved=No
+  Frame=129  JointI=29  JointJ=5  IsCurved=No
+  Frame=130  JointI=21  JointJ=47  IsCurved=No
+  Frame=131  JointI=46  JointJ=22  IsCurved=No
+  Frame=132  JointI=22  JointJ=48  IsCurved=No
+  Frame=133  JointI=47  JointJ=23  IsCurved=No
+  Frame=134  JointI=23  JointJ=49  IsCurved=No
+  Frame=135  JointI=48  JointJ=24  IsCurved=No
+  Frame=136  JointI=24  JointJ=50  IsCurved=No
+  Frame=137  JointI=49  JointJ=25  IsCurved=No
+  Frame=138  JointI=26  JointJ=32  IsCurved=No
+  Frame=139  JointI=31  JointJ=27  IsCurved=No
+  Frame=140  JointI=41  JointJ=47  IsCurved=No
+  Frame=141  JointI=46  JointJ=42  IsCurved=No
+  Frame=142  JointI=29  JointJ=35  IsCurved=No
+  Frame=143  JointI=34  JointJ=30  IsCurved=No
+  Frame=144  JointI=44  JointJ=50  IsCurved=No
+  Frame=145  JointI=49  JointJ=45  IsCurved=No
+  Frame=146  JointI=1  JointJ=7  IsCurved=No
+  Frame=147  JointI=6  JointJ=2  IsCurved=No
+  Frame=148  JointI=16  JointJ=22  IsCurved=No
+  Frame=149  JointI=21  JointJ=17  IsCurved=No
+  Frame=150  JointI=4  JointJ=10  IsCurved=No
+  Frame=151  JointI=9  JointJ=5  IsCurved=No
+  Frame=152  JointI=19  JointJ=25  IsCurved=No
+  Frame=153  JointI=24  JointJ=20  IsCurved=No
+  Frame=154  JointI=51  JointJ=27  IsCurved=No
+  Frame=155  JointI=52  JointJ=47  IsCurved=No
+  Frame=156  JointI=53  JointJ=29  IsCurved=No
+  Frame=157  JointI=54  JointJ=49  IsCurved=No
+  Frame=158  JointI=51  JointJ=55  IsCurved=No
+  Frame=159  JointI=52  JointJ=55  IsCurved=No
+  Frame=160  JointI=53  JointJ=55  IsCurved=No
+  Frame=161  JointI=54  JointJ=55  IsCurved=No
+
+TABLE: "FRAME SECTION ASSIGNMENTS"
+  Frame=1  SectionName=MAIN_BEAM
+  Frame=2  SectionName=MAIN_BEAM
+  Frame=3  SectionName=MAIN_BEAM
+  Frame=4  SectionName=MAIN_BEAM
+  Frame=5  SectionName=MAIN_BEAM
+  Frame=6  SectionName=MAIN_BEAM
+  Frame=7  SectionName=MAIN_BEAM
+  Frame=8  SectionName=MAIN_BEAM
+  Frame=9  SectionName=MAIN_BEAM
+  Frame=10  SectionName=MAIN_BEAM
+  Frame=11  SectionName=MAIN_BEAM
+  Frame=12  SectionName=MAIN_BEAM
+  Frame=13  SectionName=MAIN_BEAM
+  Frame=14  SectionName=MAIN_BEAM
+  Frame=15  SectionName=MAIN_BEAM
+  Frame=16  SectionName=MAIN_BEAM
+  Frame=17  SectionName=MAIN_BEAM
+  Frame=18  SectionName=MAIN_BEAM
+  Frame=19  SectionName=MAIN_BEAM
+  Frame=20  SectionName=MAIN_BEAM
+  Frame=21  SectionName=MAIN_BEAM
+  Frame=22  SectionName=MAIN_BEAM
+  Frame=23  SectionName=MAIN_BEAM
+  Frame=24  SectionName=MAIN_BEAM
+  Frame=25  SectionName=SEC_BEAM
+  Frame=26  SectionName=SEC_BEAM
+  Frame=27  SectionName=SEC_BEAM
+  Frame=28  SectionName=SEC_BEAM
+  Frame=29  SectionName=SEC_BEAM
+  Frame=30  SectionName=SEC_BEAM
+  Frame=31  SectionName=SEC_BEAM
+  Frame=32  SectionName=SEC_BEAM
+  Frame=33  SectionName=SEC_BEAM
+  Frame=34  SectionName=SEC_BEAM
+  Frame=35  SectionName=SEC_BEAM
+  Frame=36  SectionName=SEC_BEAM
+  Frame=37  SectionName=MAIN_BEAM
+  Frame=38  SectionName=MAIN_BEAM
+  Frame=39  SectionName=MAIN_BEAM
+  Frame=40  SectionName=MAIN_BEAM
+  Frame=41  SectionName=BOT_BEAM
+  Frame=42  SectionName=BOT_BEAM
+  Frame=43  SectionName=BOT_BEAM
+  Frame=44  SectionName=BOT_BEAM
+  Frame=45  SectionName=BOT_BEAM
+  Frame=46  SectionName=BOT_BEAM
+  Frame=47  SectionName=BOT_BEAM
+  Frame=48  SectionName=BOT_BEAM
+  Frame=49  SectionName=BOT_BEAM
+  Frame=50  SectionName=BOT_BEAM
+  Frame=51  SectionName=BOT_BEAM
+  Frame=52  SectionName=BOT_BEAM
+  Frame=53  SectionName=BOT_BEAM
+  Frame=54  SectionName=BOT_BEAM
+  Frame=55  SectionName=BOT_BEAM
+  Frame=56  SectionName=BOT_BEAM
+  Frame=57  SectionName=BOT_BEAM
+  Frame=58  SectionName=BOT_BEAM
+  Frame=59  SectionName=BOT_BEAM
+  Frame=60  SectionName=BOT_BEAM
+  Frame=61  SectionName=BOT_BEAM
+  Frame=62  SectionName=BOT_BEAM
+  Frame=63  SectionName=BOT_BEAM
+  Frame=64  SectionName=BOT_BEAM
+  Frame=65  SectionName=BOT_BEAM
+  Frame=66  SectionName=BOT_BEAM
+  Frame=67  SectionName=BOT_BEAM
+  Frame=68  SectionName=BOT_BEAM
+  Frame=69  SectionName=BOT_BEAM
+  Frame=70  SectionName=BOT_BEAM
+  Frame=71  SectionName=BOT_BEAM
+  Frame=72  SectionName=BOT_BEAM
+  Frame=73  SectionName=BOT_BEAM
+  Frame=74  SectionName=BOT_BEAM
+  Frame=75  SectionName=BOT_BEAM
+  Frame=76  SectionName=BOT_BEAM
+  Frame=77  SectionName=BOT_BEAM
+  Frame=78  SectionName=BOT_BEAM
+  Frame=79  SectionName=BOT_BEAM
+  Frame=80  SectionName=BOT_BEAM
+  Frame=81  SectionName=COLUMN
+  Frame=82  SectionName=COLUMN
+  Frame=83  SectionName=COLUMN
+  Frame=84  SectionName=COLUMN
+  Frame=85  SectionName=COLUMN
+  Frame=86  SectionName=COLUMN
+  Frame=87  SectionName=COLUMN_INNER
+  Frame=88  SectionName=COLUMN_INNER
+  Frame=89  SectionName=COLUMN_INNER
+  Frame=90  SectionName=COLUMN
+  Frame=91  SectionName=COLUMN
+  Frame=92  SectionName=COLUMN_INNER
+  Frame=93  SectionName=COLUMN_INNER
+  Frame=94  SectionName=COLUMN_INNER
+  Frame=95  SectionName=COLUMN
+  Frame=96  SectionName=COLUMN
+  Frame=97  SectionName=COLUMN_INNER
+  Frame=98  SectionName=COLUMN_INNER
+  Frame=99  SectionName=COLUMN_INNER
+  Frame=100  SectionName=COLUMN
+  Frame=101  SectionName=COLUMN
+  Frame=102  SectionName=COLUMN
+  Frame=103  SectionName=COLUMN
+  Frame=104  SectionName=COLUMN
+  Frame=105  SectionName=COLUMN
+  Frame=106  SectionName=BRACING
+  Frame=107  SectionName=BRACING
+  Frame=108  SectionName=BRACING
+  Frame=109  SectionName=BRACING
+  Frame=110  SectionName=BRACING
+  Frame=111  SectionName=BRACING
+  Frame=112  SectionName=BRACING
+  Frame=113  SectionName=BRACING
+  Frame=114  SectionName=BRACING
+  Frame=115  SectionName=BRACING
+  Frame=116  SectionName=BRACING
+  Frame=117  SectionName=BRACING
+  Frame=118  SectionName=BRACING
+  Frame=119  SectionName=BRACING
+  Frame=120  SectionName=BRACING
+  Frame=121  SectionName=BRACING
+  Frame=122  SectionName=BRACING
+  Frame=123  SectionName=BRACING
+  Frame=124  SectionName=BRACING
+  Frame=125  SectionName=BRACING
+  Frame=126  SectionName=BRACING
+  Frame=127  SectionName=BRACING
+  Frame=128  SectionName=BRACING
+  Frame=129  SectionName=BRACING
+  Frame=130  SectionName=BRACING
+  Frame=131  SectionName=BRACING
+  Frame=132  SectionName=BRACING
+  Frame=133  SectionName=BRACING
+  Frame=134  SectionName=BRACING
+  Frame=135  SectionName=BRACING
+  Frame=136  SectionName=BRACING
+  Frame=137  SectionName=BRACING
+  Frame=138  SectionName=H_BRACING
+  Frame=139  SectionName=H_BRACING
+  Frame=140  SectionName=H_BRACING
+  Frame=141  SectionName=H_BRACING
+  Frame=142  SectionName=H_BRACING
+  Frame=143  SectionName=H_BRACING
+  Frame=144  SectionName=H_BRACING
+  Frame=145  SectionName=H_BRACING
+  Frame=146  SectionName=H_BRACING
+  Frame=147  SectionName=H_BRACING
+  Frame=148  SectionName=H_BRACING
+  Frame=149  SectionName=H_BRACING
+  Frame=150  SectionName=H_BRACING
+  Frame=151  SectionName=H_BRACING
+  Frame=152  SectionName=H_BRACING
+  Frame=153  SectionName=H_BRACING
+  Frame=154  SectionName=RIGID_LINK
+  Frame=155  SectionName=RIGID_LINK
+  Frame=156  SectionName=RIGID_LINK
+  Frame=157  SectionName=RIGID_LINK
+  Frame=158  SectionName=SLING
+  Frame=159  SectionName=SLING
+  Frame=160  SectionName=SLING
+  Frame=161  SectionName=SLING
+
+TABLE: "FRAME TENSION/COMPRESSION ASSIGNMENTS"
+  Frame=158  TCLimitType=TensionOnly
+  Frame=159  TCLimitType=TensionOnly
+  Frame=160  TCLimitType=TensionOnly
+  Frame=161  TCLimitType=TensionOnly
+
+TABLE: "FRAME RELEASE ASSIGNMENTS 1 - GENERAL"
+  Frame=106  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=107  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=108  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=109  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=110  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=111  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=112  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=113  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=114  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=115  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=116  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=117  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=118  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=119  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=120  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=121  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=122  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=123  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=124  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=125  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=126  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=127  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=128  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=129  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=130  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=131  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=132  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=133  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=134  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=135  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=136  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=137  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=138  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=139  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=140  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=141  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=142  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=143  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=144  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=145  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=146  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=147  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=148  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=149  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=150  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=151  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=152  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=153  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=154  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=155  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=156  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=157  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=158  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=159  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=160  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+  Frame=161  M2I=Yes  M3I=Yes  M2J=Yes  M3J=Yes
+
+TABLE: "JOINT RESTRAINTS"
+  Joint=55  U1=Yes  U2=Yes  U3=Yes  R1=Yes  R2=Yes  R3=Yes
+
+TABLE: "LOAD PATTERN DEFINITIONS"
+  LoadPat=DEAD  DesignType=Dead  SelfWtMult=1
+  LoadPat=LIFT  DesignType=Other  SelfWtMult=0
+
+TABLE: "LOAD CASE DEFINITIONS"
+  Case=DEAD  Type=LinStatic  InitialCond=Zero  DesTypeOpt="Prog Det"  DesignType=Dead  DesActOpt="Prog Det"  DesignAct=Non-Composite  AutoType=None  RunCase=Yes
+  Case=LIFT  Type=LinStatic  InitialCond=Zero  DesTypeOpt="Prog Det"  DesignType=Other  DesActOpt="Prog Det"  DesignAct=Other  AutoType=None  RunCase=Yes
+
+TABLE: "COMBINATION DEFINITIONS"
+  ComboName=COMB1  ComboType=LinearAdd
+  ComboName=COMB1  CaseName=DEAD  ScaleFactor=1.0
+  ComboName=COMB1  CaseName=LIFT  ScaleFactor=1.0
+  ComboName=COMB2  ComboType=LinearAdd
+  ComboName=COMB2  CaseName=DEAD  ScaleFactor=1.0
+  ComboName=COMB2  CaseName=LIFT  ScaleFactor=1.25
+
+TABLE: "JOINT LOADS - FORCE"
+  Joint=51  LoadPat=LIFT  CoordSys=GLOBAL  F1=41.96  F2=13.99  F3=76.61
+  Joint=52  LoadPat=LIFT  CoordSys=GLOBAL  F1=-41.96  F2=13.99  F3=76.61
+  Joint=53  LoadPat=LIFT  CoordSys=GLOBAL  F1=41.96  F2=-13.99  F3=76.61
+  Joint=54  LoadPat=LIFT  CoordSys=GLOBAL  F1=-41.96  F2=-13.99  F3=76.61
+
+TABLE: "ANALYSIS OPTIONS"
+  Solver=Advanced  SolverProc=Auto  Force32Bit=No  StiffCase=None  GeomMod=None  HingeOpt="In Elements"  NumAThreads=0  MaxFileSize=0  NumDThreads=0  NumRThreads=0  UseMMFiles="Program Determined"  AllowDiff=No
+
+TABLE: "OUTPUT OPTIONS"
+  JointDisp=Yes  JointReact=Yes  FrameForce=Yes  FrameDesign=Yes
+
+TABLE: "PREFERENCES - STEEL DESIGN - CHINESE 2018"
+  THDesign=Envelopes  FrameType="NonSway Moment Frame, NMF"  PatLLF=0  SRatioLimit=1  MaxIter=1  TallBldg=Yes  SDG="Grade II"  Gamma0=1  IgnoreBoT=Yes  BeamMandN=No  IgnorePhiB=No  AnaMethod="Direct Analysis"  StabEta_cr=0  CheckDefl=No  DLRat=120  SDLAndLLRat=120  LLRat=500  TotalRat=400  NetRat=500
+
+TABLE: "DESIGN GROUPS 1 - GENERAL"
+  GroupName=ALL  DesignType=SteelFrame
+
+TABLE: "MASS SOURCE"
+  MassSource=MSSSRC1  Elements=Yes  Masses=Yes  Loads=No  IsDefault=Yes
+
+TABLE: "END TABLE DATA"
+
