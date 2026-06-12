@@ -1,15 +1,35 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(wget *)",
+      "Bash(curl *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(ls *)",
+      "Bash(echo *)",
+      "Bash(cat *)",
+      "Bash(npm *)",
+      "Bash(winget *)"
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "JQ=\"$HOME/AppData/Local/Microsoft/WinGet/Links/jq.exe\"; input=$(cat); dir=$(echo \"$input\" | \"$JQ\" -r '.workspace.current_dir'); model=$(echo \"$input\" | \"$JQ\" -r '.model.display_name'); pct=$(echo \"$input\" | \"$JQ\" -r '.context_window.remaining_percentage // \"0\"'); pct=${pct%.*}; n=$((pct/10)); bar=$(printf \"█%.0s\" $(seq 1 $n)); empty=$(printf \"░%.0s\" $(seq $((n+1)) 10)); if [ -n \"$pct\" ]; then printf '%s  |  %s  |  %s%s %d%%' \"$dir\" \"$model\" \"$bar\" \"$empty\" \"$pct\"; else printf '%s  |  %s' \"$dir\" \"$model\"; fi"
+  },
   "hooks": {
     "Stop": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PROJECT_DIR}/scripts/ding.ps1\"",
-            "timeout": 5
+            "command": "cd \"${CLAUDE_PROJECT_DIR}\" && git add -A && git diff --cached --quiet || git commit -m \"自动同步: $(date '+%Y-%m-%d %H:%M')\"",
+            "timeout": 15
           }
         ]
       }
     ]
-  }
+  },
+  "autoMemoryEnabled": true,
+  "theme": "auto"
 }
