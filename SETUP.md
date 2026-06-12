@@ -1,54 +1,21 @@
-# 新电脑快速配置
-
-回家在新电脑上按顺序执行：
-
-## 1. 克隆项目（全家桶一键到位）
+# 新电脑一句话上车
 
 ```bash
-git clone git@github.com:easonzhang875/pomodoro.git
-cd pomodoro
+git clone git@github.com:easonzhang875/pomodoro.git && cd pomodoro
 ```
 
-PaperSpine（论文 skill）、所有项目配置、skills、commands 已全部内置在仓库里，无需额外安装。
+然后打开 Claude Code，输入：
 
-## 2. 配置 DeepSeek API Key
-
-```bash
-setx DEEPSEEK_API_KEY "你的key"
-```
-
-或者创建 `~/.claude/settings.json`：
-
-```json
-{
-  "env": {
-    "ANTHROPIC_AUTH_TOKEN": "你的key",
-    "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-pro",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-pro",
-    "ANTHROPIC_MODEL": "deepseek-v4-pro"
-  }
-}
-```
-
-## 3. 安装 jq（statusLine 进度条依赖）
-
-```bash
-winget install jqlang.jq
-```
-
-## 完成
-
-重启 Claude Code，一切就绪。
+> **继续深海一万米项目，停在 Checkpoint Plan**
 
 ---
 
-## 日常切换电脑
+## 首次用？额外做两步
 
-```
-离开 A 电脑前：git push                → 手动推一下
-回到 B 电脑后：git pull                → 拉最新
-```
+```bash
+# 1. API Key（已有就跳过）
+setx DEEPSEEK_API_KEY "你的key"
 
-关 CC 时会自动 commit，但 push 需要你手动敲。
+# 2. jq（statusLine 进度条用）
+winget install jqlang.jq
+```
